@@ -1,5 +1,5 @@
 {
-  "note": "Initial import source hashes. ESP32 password removed; test include paths adjusted. Local source paths omitted. Provisional STL copies packed losslessly into mechanical/exports/STL_PROVISIONAL.zip; see stl-manifest.json.",
+  "note": "Initial import source hashes. ESP32 password removed; test include paths adjusted. Local source paths omitted. Text line endings normalized for Git. Provisional STL copies packed losslessly into mechanical/exports/STL_PROVISIONAL.zip; see stl-manifest.json.",
   "files": [
     {
       "repository_path": "legacy/chute-v2/BottleSorter_Mega_V2/BottleSorter_Mega_V2.ino",

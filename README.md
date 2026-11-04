@@ -32,6 +32,6 @@ This team project combines Arduino Mega stepper control, ESP32-S3 camera classif
 
 The repository is public for viewing and downloading. MrAss0115 maintains the upstream repository; contributors use forks and pull requests. Repository ownership and write access are different from authorship: purchasing, wiring, and development were team work, including joint driver procurement and wiring with Yuan.
 
-`main` is the documented project baseline. The planned development branch is `feature/three-bin-tray`. The legacy source snapshot is retained in `legacy/` and `demos/`; import files are not claimed to exactly reproduce later board-side demo edits.
+`main` is the documented project baseline. The development branch is `feature/three-bin-tray`. The legacy source snapshot is retained in `legacy/` and `demos/`; import files are not claimed to exactly reproduce later board-side demo edits.
 
 No project-wide reuse license has been selected. Third-party components retain their own licenses; see [third-party notices](THIRD_PARTY_NOTICES.md).
