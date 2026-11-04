@@ -1,0 +1,12 @@
+* text=auto
+*.ino text eol=lf
+*.h text eol=lf
+*.cpp text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.f3d binary
+*.step binary
+*.stl binary
+*.png binary
+*.pdf binary
+*.zip binary

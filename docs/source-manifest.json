@@ -1,0 +1,121 @@
+{
+  "note": "Initial import source hashes. ESP32 password removed; test include paths adjusted. Local source paths omitted. Provisional STL copies packed losslessly into mechanical/exports/STL_PROVISIONAL.zip; see stl-manifest.json.",
+  "files": [
+    {
+      "repository_path": "legacy/chute-v2/BottleSorter_Mega_V2/BottleSorter_Mega_V2.ino",
+      "source_sha256": "39ab662ecb2e719892fedfd611312d5d168b41045191b5b2d3dece0173a990b7"
+    },
+    {
+      "repository_path": "demos/full-flow-sim/BottleSorter_FullFlow_Sim/BottleSorter_FullFlow_Sim.ino",
+      "source_sha256": "3df9d7dfa2b590436e934f24f7a317969b4c0f9b0a8b4304bd73306c6b86908c"
+    },
+    {
+      "repository_path": "firmware/esp32/Bottle_AI_Camera_Preview/Bottle_AI_Camera_Preview.ino",
+      "source_sha256": "2b246ab6150f7437b10e9ec08c03878f9bd7fd0f0c479a25927d4b42342ae900"
+    },
+    {
+      "repository_path": "dependencies/ei-dajimk-project-1-arduino-1.0.5.zip",
+      "source_sha256": "f2c08d6397067842564381b3bc398c0cad3c683fb277e9f5c351460ca71beb95"
+    },
+    {
+      "repository_path": "mechanical/source/BottleSorter_R01_PARAMETRIC.f3d",
+      "source_sha256": "212563a9bac6e0eee1aa7b3578152ac2565f43b6eff1d41e3aba11aa5b1cbf72"
+    },
+    {
+      "repository_path": "mechanical/exports/BottleSorter_R01_ASSEMBLY.step",
+      "source_sha256": "0a006b40a6ebf9446eb150e9028e719afc19ba17f02fe0dff2b7bf70b590f962"
+    },
+    {
+      "repository_path": "mechanical/exports/parts_list.csv",
+      "source_sha256": "ec7651ab9af3e435d0afadc61ffddc337e995827e113a31be2fc7c48cb4645d4"
+    },
+    {
+      "repository_path": "mechanical/exports/parameters.csv",
+      "source_sha256": "1f8172afa66b0e40bdd916fa1edac886a9b5d7d039dfb876bf6cf457dfd5a165"
+    },
+    {
+      "repository_path": "mechanical/exports/FIRST_TEST_PRINT/TRACK_UNDERSIDE_SPLICE_01.stl",
+      "source_sha256": "e3546c5ca3783847673558cb3ff43b1cdc120db39d2044fdf2e3af57662ceb0c"
+    },
+    {
+      "repository_path": "mechanical/exports/FIRST_TEST_PRINT/U_BRACKET_1.stl",
+      "source_sha256": "d0250c1dcb0ec6cc39391d8e6f174dd30aee2fcb7d1a1b7a2199a3b6ceb541b8"
+    },
+    {
+      "repository_path": "mechanical/exports/FIRST_TEST_PRINT/WALL_TRACK_01.stl",
+      "source_sha256": "41588204c2377191012bae4ade9581d03e737897f418dfa1b14657b7984ab375"
+    },
+    {
+      "repository_path": "mechanical/exports/FIRST_TEST_PRINT/WALL_TRACK_12.stl",
+      "source_sha256": "8b4714866ed421072f93985295365e906d6875ab06cc9ba3f2880e8f8a385b9e"
+    },
+    {
+      "repository_path": "mechanical/images/01_assembly_complete.png",
+      "source_sha256": "9da0bcd74de14b5b240f0158fa3e76053852f93e17af55f544dd8287e4a3df74"
+    },
+    {
+      "repository_path": "mechanical/images/02_upper_six_cells.png",
+      "source_sha256": "82b82238993369c6334f0c8f2bb8e757ca02e5c377d153fc2b0c67e08bf2a3fa"
+    },
+    {
+      "repository_path": "mechanical/images/03_upper_top.png",
+      "source_sha256": "0bd5f59c5380640661ca0c401c6545f119f02c1238cb16a2367236c22d77050d"
+    },
+    {
+      "repository_path": "mechanical/images/04_side_section_no_blades.png",
+      "source_sha256": "e0f5280624ad488e64acf673a5b2d5cf64266f77c2f09fb01ad253d34e3bbaf4"
+    },
+    {
+      "repository_path": "mechanical/images/05_cross_wall_wheel_detail.png",
+      "source_sha256": "8830612c66044f29f3a4a830af68a04c08b269ccf3fa9b1f24716f7c4d31d6ac"
+    },
+    {
+      "repository_path": "mechanical/images/06_three_bins_and_support.png",
+      "source_sha256": "948c670520e8871622bf86b4deb7df4a215762f7c6683624477a2a700c29ddc3"
+    },
+    {
+      "repository_path": "mechanical/images/07_full_side.png",
+      "source_sha256": "72787a9606f52db41b7208351e91f7b04463b4393c8fe5a56daaf7fce33836ce"
+    },
+    {
+      "repository_path": "mechanical/README_\u539f\u6a21\u578b\u8bf4\u660e.md",
+      "source_sha256": "d37d1f88c1d0eb8979137195bfb95378deee38c994a9273937a76abf3617ad8e"
+    },
+    {
+      "repository_path": "mechanical/docs/BottleSorter_R01_Model_Report.pdf",
+      "source_sha256": "ab63b63e914188865af137ab0e0335b63cced6e58a943c6946ca63cba9b3093f"
+    },
+    {
+      "repository_path": "tests/legacy-chute/Arduino.h",
+      "source_sha256": "123c9ef0474d1e5aefd87f6406e68c80a918baadb4fe7bd5cd1f88922f8cdd80"
+    },
+    {
+      "repository_path": "tests/legacy-chute/Adafruit_GFX.h",
+      "source_sha256": "aecb9819eb04bf5ad6cd2535cfac9b1bed5ef7946e551eff2224759862e16294"
+    },
+    {
+      "repository_path": "tests/legacy-chute/Adafruit_SSD1306.h",
+      "source_sha256": "aed11916bd762e4b183d7278268b9974bbb96718f53d6264835a39cf3b3a3e71"
+    },
+    {
+      "repository_path": "tests/legacy-chute/Wire.h",
+      "source_sha256": "81ceb2d129da374b174a6bbb33ca9063e6bed6940ce81fc3343d8af96b86a854"
+    },
+    {
+      "repository_path": "tests/legacy-chute/test.cpp",
+      "source_sha256": "ea79e4bbdd6b8ebcb6f924a532fb21a5bfc14c38192973ffc5b44e99175a2fb9"
+    },
+    {
+      "repository_path": "tests/full-flow-sim/Arduino.h",
+      "source_sha256": "123c9ef0474d1e5aefd87f6406e68c80a918baadb4fe7bd5cd1f88922f8cdd80"
+    },
+    {
+      "repository_path": "tests/full-flow-sim/test.cpp",
+      "source_sha256": "61d9580fa02bf263d1439278de73dbf05c647ebdb219fcfb3c2df30d536de52a"
+    },
+    {
+      "repository_path": "tests/full-flow-sim/helpers.inc",
+      "source_sha256": "98024fb9d5170a088f365ed53e80841d538abb3d354e553b1b75a4cbac1bd05e"
+    }
+  ]
+}

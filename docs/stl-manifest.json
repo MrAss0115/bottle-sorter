@@ -1,0 +1,952 @@
+[
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_01.stl",
+    "size": 12284,
+    "sha256": "b47542f708c9514a8e880be548e9493672cb34f284aa60ce8e20df6a41b9a1bc"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_02.stl",
+    "size": 12284,
+    "sha256": "9697adf814435476eb055467778938932123909a6e49e58203fe7fcf19658ae1"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_03.stl",
+    "size": 12284,
+    "sha256": "64ccc71a804e8b0ed857173069d599da5d48d67bb38c49135f32ea3d046584ca"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_04.stl",
+    "size": 12284,
+    "sha256": "f659e12e69eca4f55821b988bb69cccd0b6d579e345fcc0c4abe17c7cc8f804e"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_05.stl",
+    "size": 12284,
+    "sha256": "75b9ed6a107b3a0dc2f963a135ca5365c62853411f559ec6ab7c5d7b47ddd58e"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_06.stl",
+    "size": 12284,
+    "sha256": "881019a0402e4c18c88a5413751b1199bb9569861d04f109f6c59add9f194973"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_07.stl",
+    "size": 12284,
+    "sha256": "9dea202ff9f018701c36e86fa51bad5d78293d02257aab3421d27889acb43b2e"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_08.stl",
+    "size": 12284,
+    "sha256": "3264a1c5439da933ca05dfff5aed384c44c1b05b4c2cd5243500ae0d21e59951"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_09.stl",
+    "size": 12284,
+    "sha256": "f3ce0ae07b2176fa4e6eb7b133f2dbfc3101d41d24eefacfa69bcbc38828e919"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_10.stl",
+    "size": 12284,
+    "sha256": "a5d48a6bfaa0926c9b3c19204ad30c5b18ae0f63364013ad2ee246e7fded9034"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_11.stl",
+    "size": 12284,
+    "sha256": "eca67cd10148e0552167921d8adf4cae4ee9ba7d61f7a095db1d5cb41d7f34a3"
+  },
+  {
+    "file": "STL_PROVISIONAL/BASE_RING_12.stl",
+    "size": 12284,
+    "sha256": "46b1ac73a1e9b69db9ddf07cf31c476a559ddfe46fd1af3c387f1b1a814a4c36"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_BASE_1.stl",
+    "size": 13084,
+    "sha256": "36ea45aea48a666013b97b47503121c41bb1f403d8db77c95ecdc9a44e78f413"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_BASE_2.stl",
+    "size": 11484,
+    "sha256": "3fd9beaff1989d7b53df8e52f69712fecbe0361d3f79993404961653d7d23b8d"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_BASE_3.stl",
+    "size": 11484,
+    "sha256": "9ca69eb8ff2617c9998bdc82228bb8b5deab2b6d20e91706f64b3ce98ce701bd"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_BASE_4.stl",
+    "size": 13084,
+    "sha256": "a4f38ba7b15cc8702c3785056cdb3ec0a056d5a9ae041a90725ea895a72c7afa"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_INNER.stl",
+    "size": 45084,
+    "sha256": "b51a2e07661706286e0f8bfb6d87c796dc9d20ab490a025d5a30645981522eed"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_LOCATOR_1.stl",
+    "size": 684,
+    "sha256": "2951ab82fb3018d803f06d1fc0dc9630910d3836d023b2d56ee7992859bc1273"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_LOCATOR_3.stl",
+    "size": 684,
+    "sha256": "6dd3927d490029d19a1992cc83d422d363f9eab4a0b935ce6d94b0eee2f10b89"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_OUTER_1.stl",
+    "size": 11484,
+    "sha256": "3190a6c6e67d55d6c757144f3ddf63024d70b274059e91e9c2622e99de47daab"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_OUTER_2.stl",
+    "size": 11484,
+    "sha256": "cb7b2cc3e99f6e33adb8c459208ed7518f50dd7d27d387dda32bd2962cf2be52"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_OUTER_3.stl",
+    "size": 11484,
+    "sha256": "2a949296c076f3cf26396e0b04417ec4697c6838fba6cf94254956b1779ada45"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_OUTER_4.stl",
+    "size": 11484,
+    "sha256": "838a2fec3243feb6b2eee142ff7c411af96bb96730e02b22f3824ad74085777b"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_SIDE_FIT_1.stl",
+    "size": 684,
+    "sha256": "6e259e29c7d4f1e09cde795bfc4f3285272f3ca55816e00dabc511136f46e0ea"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_1_SIDE_FIT_2.stl",
+    "size": 684,
+    "sha256": "bde1be6763d524957dfb52f929d5ecb446c45a07e36bf91a6c63cb4b95155129"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_BASE_1.stl",
+    "size": 13084,
+    "sha256": "5907a025d503485aa58ce5330a745d529c14ae32a41b25546cc2f5b6e82e352d"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_BASE_2.stl",
+    "size": 11484,
+    "sha256": "51457ee90baac50e9092433948595622b51d6a7684d794d00b8659e212e19b88"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_BASE_3.stl",
+    "size": 11484,
+    "sha256": "68411a6653ec27239f30c307af728a4069535a6cfcc7a4cb0d90927ceb9f42f1"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_BASE_4.stl",
+    "size": 13084,
+    "sha256": "6d45b914b14b767128ec2a3f8270a87ea272b78950a071c37c473c072533f4ea"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_INNER.stl",
+    "size": 45084,
+    "sha256": "04cd28fa0bd8c9671982463e74e28841198929813d173f1e8723d488662ef6ac"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_LOCATOR_1.stl",
+    "size": 684,
+    "sha256": "969eb83c3391fc6dcc3e814d5309727c0f8554706a0e6060974d3fed818ca7b2"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_LOCATOR_3.stl",
+    "size": 684,
+    "sha256": "50ad218f1b4dedb80900b03d7a821339b7ae1364095bdcc7df69a782bb29f479"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_OUTER_1.stl",
+    "size": 11484,
+    "sha256": "a9c9b11b22587e169959ba8b19fea417533e1182e963d992b7fcf69ec112df85"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_OUTER_2.stl",
+    "size": 11484,
+    "sha256": "79d69bfbc262ad402353bde0318c5bd53b7913fd7a959178f92dd686fad36e5d"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_OUTER_3.stl",
+    "size": 11484,
+    "sha256": "1eb0ec5fe1c10f1e5c4bc759d30c279a9fc50a3fc9b52effa3719b81df092d62"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_OUTER_4.stl",
+    "size": 11484,
+    "sha256": "a5a0f66085345de62e56fb013d58e21f17fc22c132f03f9ff74d8c9fad280ed1"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_SIDE_FIT_1.stl",
+    "size": 684,
+    "sha256": "40f47230776051203bd26d58c8fa1a245abdf6d603704e119091a232073558f3"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_2_SIDE_FIT_2.stl",
+    "size": 684,
+    "sha256": "b19484e81acef66dd1dc0dd8b7d727fc0f8e4f138728ed6ebb08af693e9d0a7b"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_BASE_1.stl",
+    "size": 13084,
+    "sha256": "99b5e9e3e56e4d0c69640b5cef7ab5699082acbf8bc6a985be33f14520f2c9d2"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_BASE_2.stl",
+    "size": 11484,
+    "sha256": "936f7fccf14b6c07b665c2bc0099e4eaf192df77371f6bbca405b7898c094ec5"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_BASE_3.stl",
+    "size": 11484,
+    "sha256": "8cf6ca73fa2e2694fe408d30860aabc1fff07e3124e4fd657fa75695bbc5fbc8"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_BASE_4.stl",
+    "size": 13084,
+    "sha256": "ecc7430dae935269d1c8ff45ada2ccdfc7cc4a59a0636f6731fa5a57c56d2c5a"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_INNER.stl",
+    "size": 45084,
+    "sha256": "2c73c2e0b2db59fbb95db1b2e1e60d394c6a8a155491ddb4c7b9ee086e9ed9a5"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_LOCATOR_1.stl",
+    "size": 684,
+    "sha256": "fdcfa809e87132d12a9c32963426247c79c630d2dc0cd641ee683c51b49e6f16"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_LOCATOR_3.stl",
+    "size": 684,
+    "sha256": "4b57f3a211c038cfab7e192836c29371a9ad0182eda70303e039ee1d3bf1dbb7"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_OUTER_1.stl",
+    "size": 11484,
+    "sha256": "e05af09667357e9baa027daa954f907541d3dd38893eba4efd265273fdfa061d"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_OUTER_2.stl",
+    "size": 11484,
+    "sha256": "6d54161ec576c8dd23e2cc583eb6ae9636951057d282355408819963af01a98d"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_OUTER_3.stl",
+    "size": 11484,
+    "sha256": "9c60269d378a3503c357191be474c483c6cf953253b1fc7bce525ce8997b92fb"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_OUTER_4.stl",
+    "size": 11484,
+    "sha256": "7aa87a8c6159470f7924d9af39367989bb132147ed8e8d16013f8e35210be66a"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_SIDE_FIT_1.stl",
+    "size": 684,
+    "sha256": "532bd5a90dca5747293e6aae640484d099f61fb768765bad6301746d019b1e3a"
+  },
+  {
+    "file": "STL_PROVISIONAL/BIN_3_SIDE_FIT_2.stl",
+    "size": 684,
+    "sha256": "59520763d0e6b2da8582fd5c2ffbd890718f41607eb2e06d13a23d5e9d1a3fd9"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_1.stl",
+    "size": 111684,
+    "sha256": "3d7e8a56a51dd960ea5bbf967b23c7967312fbeb6eb7d82d546121c305f3a682"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_2.stl",
+    "size": 182284,
+    "sha256": "eed98a8ba8cb2ce618f299ebf1b089f286ce7f274ca5042ca5d9c9300fc07926"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_3.stl",
+    "size": 111684,
+    "sha256": "aa5cc4f045ac2cbd41da7bba0591621f1a6ad3af1436d2228da80eca554fd811"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_4.stl",
+    "size": 182284,
+    "sha256": "a9bcfaf8c5f5c8ee5d6968c890600d6a918025b1fcf6f28cff9aa84870eab6ca"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_5.stl",
+    "size": 111684,
+    "sha256": "2c211b2fd5fe616efc997baa8e07359c74ea9fec8ea1ef865b99176dd7f9fa1f"
+  },
+  {
+    "file": "STL_PROVISIONAL/BLADE_6.stl",
+    "size": 182284,
+    "sha256": "86a511bffd871d15bd67c8d2633c4f2039ca86a8b7d4fded5abe8084c9e0300f"
+  },
+  {
+    "file": "STL_PROVISIONAL/DROP_SENSOR_LINK_-1.stl",
+    "size": 684,
+    "sha256": "58c2132b09f04f412ee7d80c2a28fb9840ca77c8fa154909400dd0fd21e7f75f"
+  },
+  {
+    "file": "STL_PROVISIONAL/DROP_SENSOR_LINK_1.stl",
+    "size": 684,
+    "sha256": "ffdcad2c2d2f1bc2d40c44fb92204591f82364458785c565f020048a4b5c882d"
+  },
+  {
+    "file": "STL_PROVISIONAL/DROP_SENSOR_PLATE_-1.stl",
+    "size": 684,
+    "sha256": "3e7c796d2f60a37765204f550d4c71df88f66eaaceb2184ec1722c91eff60751"
+  },
+  {
+    "file": "STL_PROVISIONAL/DROP_SENSOR_PLATE_1.stl",
+    "size": 684,
+    "sha256": "fd0f83d9a80f6cd1c3f206bc836671391737a6fdbacc02b98699ee8fdbaad82b"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_01__body1.stl",
+    "size": 3227184,
+    "sha256": "4ee53c925b752f734d9f56b6905f8ae6e81a99c56e34c379d785f392b3aa4bf3"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_01__body2.stl",
+    "size": 153284,
+    "sha256": "4d38b85798bf9bbae6baf30b4f07b1690735e06ad406eb783a9e769226cb0c1d"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_02.stl",
+    "size": 3197184,
+    "sha256": "ccc1f4175256a8e628f6a322397e0b5b6e7faa4c505f6a69032e75c45db633be"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_03.stl",
+    "size": 12284,
+    "sha256": "760a182c7ba02574c6e200f41bbe656e6cf1a08db3e4d1d87a2fd534ff318b80"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_04.stl",
+    "size": 12284,
+    "sha256": "9006484e8464855b2afc6326b3686e36730c2cb02a0b0ec15095b28d715d49cd"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_05.stl",
+    "size": 12284,
+    "sha256": "e7f40b37758ed4fe2d2215de0f370e4764786952c8a1f37ae66cf18f949ba107"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_06.stl",
+    "size": 12284,
+    "sha256": "0fa8d51f7a34b35ba4e09e55ed29eb9084363af0e00309f9b78696e77e32922d"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_07.stl",
+    "size": 12284,
+    "sha256": "7bad7ad92ec292921ab85aaecd7c36549fbb13418a3ce7f20d86b0f67e1398f9"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_08.stl",
+    "size": 12284,
+    "sha256": "beb81fbd0dee08eaa3fef3f6df6aef8eba723419ee63323e7c8deae5fb94de91"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_09.stl",
+    "size": 12284,
+    "sha256": "80df7b90cc01a1d3a80db658e13002751b1a4e2d751ebdb2f53eac6e84cccf75"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_10.stl",
+    "size": 12284,
+    "sha256": "496e68786d0b739bae46df05f785c14078686ddb3dcd425f33279e328edf9ca3"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_11.stl",
+    "size": 3196884,
+    "sha256": "4a4175e7da331dd99604e9946cb36410dec1f7196c4e8b8bfd3f2f27c0a72ce8"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_12__body1.stl",
+    "size": 3227484,
+    "sha256": "6937ac565be7558210628a657342d82a46c005073314070285e45372e8a68667"
+  },
+  {
+    "file": "STL_PROVISIONAL/FLOOR_12__body2.stl",
+    "size": 153284,
+    "sha256": "f6cad61b8435e828357127f07320f6131844d89f546b8d7dba4766ecb81600b6"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_1_1.stl",
+    "size": 684,
+    "sha256": "fedbf92724fe14761b4b70c0bc201acae551c97ebb3c350570ed1931774d9dbb"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_1_2.stl",
+    "size": 684,
+    "sha256": "a0a9ed65e88d8583b2808989fcd9775a33d51744a1d93753f76f2cb719a8b789"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_1_3.stl",
+    "size": 684,
+    "sha256": "d1ea0dc07c2a33d284abb48a22fe38fde6acec4d4a28c30b7e9ad605cd12b8f8"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_2_1.stl",
+    "size": 684,
+    "sha256": "31969bb4d24d106f55ce4f3b10351d8bdc6faa77bd0ae5f8e746a92d3ace70f4"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_2_2.stl",
+    "size": 684,
+    "sha256": "66328c2bcdb53f2f7f38c77a165abe3936077673bb30c0879e6764c5e1054d56"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_2_3.stl",
+    "size": 684,
+    "sha256": "8d6b916e89258d501915c1400eb7d0ef75438ea90c988a6add970523e3b76c7e"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_3_1.stl",
+    "size": 684,
+    "sha256": "b2989d5ada247e42d8770fd4c46cfc52d18a4dbaf8e5d074782982781f888050"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_3_2.stl",
+    "size": 684,
+    "sha256": "f996c7202fb39afb5c6b2833163586e567d6028d5403acb43cef47fa734d2775"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_3_3.stl",
+    "size": 684,
+    "sha256": "8559aff108333af948279524c531a15850ed4f6e01dc8537455a0c232149e2c8"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_4_1.stl",
+    "size": 684,
+    "sha256": "40608ac576ac7682d27db309c45854cd5af63272fdccbda80b3f0ffa078be8da"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_4_2.stl",
+    "size": 684,
+    "sha256": "40608ac576ac7682d27db309c45854cd5af63272fdccbda80b3f0ffa078be8da"
+  },
+  {
+    "file": "STL_PROVISIONAL/FRAME_LEG_4_3.stl",
+    "size": 684,
+    "sha256": "ca042357e96cdc452910ac8357d14b2da629e565a75b4d01cd2022374e19bb02"
+  },
+  {
+    "file": "STL_PROVISIONAL/HUB_SPLIT_CLAMP_PROVISIONAL.stl",
+    "size": 307684,
+    "sha256": "3edd663c8638f8a14c030a452ef5c40b1651fa2de81553424c11ee2984bab641"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_COUPLING_PLACEHOLDER.stl",
+    "size": 144084,
+    "sha256": "215efb8c9d6191bc8c73cb2680c3c1cc6ecc7382cf5590f648b493eef76bb520"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_DUAL_SENSOR_PLATE.stl",
+    "size": 291084,
+    "sha256": "9049687ca5ee5f68c5187e7ace9d8af3d7d6dc82e45d853e9df6f0d272926613"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MARKER_CARRIER_1.stl",
+    "size": 2884,
+    "sha256": "caf60ac95422542e8db9ca5a207799089d6295b774c1dc00f625bcc2da8d9932"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MARKER_CARRIER_2.stl",
+    "size": 2484,
+    "sha256": "70893adc016037ec49ae223fbcc86bcba221a71ab759196850190462295d56dc"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MARKER_CARRIER_3.stl",
+    "size": 2484,
+    "sha256": "2a75138a2b4f2201631f043587c1e6f735598437aee64d538d054760e3ba8d40"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MOTOR_ARM_210.stl",
+    "size": 37684,
+    "sha256": "a291b86ec74a134c7a1dc6e8fc5b84b909a8dc478a15a53de8d9dd54361209a4"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MOTOR_ARM_330.stl",
+    "size": 37684,
+    "sha256": "8a07bd8e58b67e018c7d4bede9857777bcd230f3819f92020f7905ea269b93b9"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MOTOR_ARM_90.stl",
+    "size": 37684,
+    "sha256": "fe1805e83ff723ed16da8eff99b6a9d7a0d3800f49815cb3bffe8bf38c65c07d"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_MOTOR_MOUNT_PROVISIONAL.stl",
+    "size": 361684,
+    "sha256": "9c4f44d858c7bb2c471c090744634f35f7575b5586e97e8a53e49cd4774ec372"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_01.stl",
+    "size": 12284,
+    "sha256": "9ea834c74e726b52769fdab780d1f9edaf7574219ef409fb0a7c41c068ceaa17"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_02.stl",
+    "size": 12284,
+    "sha256": "1382dd0113f488bc2e735a08767f24f6a3526dbb3347a6943a97b7ea6fc7180d"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_03.stl",
+    "size": 12284,
+    "sha256": "c61b28d5291a12ec2e9052190ff7b6d5fc45dfe4411a96100cee5987a9c63b0b"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_04.stl",
+    "size": 12284,
+    "sha256": "ee98fa401e66c0fdba95872773ff1b48c6adc6a1a171830fb0f775658390ec3d"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_05.stl",
+    "size": 12284,
+    "sha256": "add0ef030e410e84a66c755bda19df173faec7ece4410fd0c72812282d917d14"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_06.stl",
+    "size": 12284,
+    "sha256": "0d36c00f5326a2ceb451188b799ff3dce0d099fb8c497ac0b60a0e84a0ebe5b3"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_07.stl",
+    "size": 12284,
+    "sha256": "2ba4c56df1bc701ef75d294aa22ce2b0effb03e7815266701e6c858210b0d9ef"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_08.stl",
+    "size": 12284,
+    "sha256": "7a4af0dcfe535bde0545e0f19b776e9191795f02b2f344da4ca321dc00247abd"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_09.stl",
+    "size": 12284,
+    "sha256": "f94ff6a21dbf23d42065f45c6f5145ca92f088bf79935a308ae2de19e5db4d8f"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_10.stl",
+    "size": 12284,
+    "sha256": "be38eb73808fd27932dbaed4935e002f69ee9431a19560116214d1f51ccf4b91"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_11.stl",
+    "size": 12284,
+    "sha256": "26b8fe40fb7bdce6b80254f8f75d15768b6c744b19ce9646137eb60d3e483671"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_ROLLING_RING_12.stl",
+    "size": 12284,
+    "sha256": "fa2ac74cea6fe6fe78dc3cee7153ecb499719be296c2cd4275f792f648e92f87"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_SENSOR_FIXED_POST.stl",
+    "size": 684,
+    "sha256": "b683b08c9a8cbeb555a856806005cee30936568f1519d2015d9dd81901123bd6"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_1.stl",
+    "size": 145884,
+    "sha256": "9272dd0ac7db4912514a386be7b59d60306a823b22093b99fd36dc1da00bedfa"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_2.stl",
+    "size": 145884,
+    "sha256": "4c6367799a64ac177178f4908f954296ffd89cb989d0119d07ac81b3d796dc3d"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_3.stl",
+    "size": 145884,
+    "sha256": "cbde4512f2c5ef733e16557cd113e57cc77f832c44d93e4e6f6cc540d209dfd6"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_4.stl",
+    "size": 145884,
+    "sha256": "748769f54cf92990bf44dc1f9741cd018bec1834f02d1ea801c2eb877a14f1e5"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_5.stl",
+    "size": 145884,
+    "sha256": "4e79f3dc334a2d49cd2f206c3a3c5b51428542ade33e6f56fc20273c14f83a33"
+  },
+  {
+    "file": "STL_PROVISIONAL/LOWER_WHEEL_FORK_6.stl",
+    "size": 145884,
+    "sha256": "cfe476ba90a3cb51f52926cc3db16941e246b584f98a76afccf2c71c423f52d0"
+  },
+  {
+    "file": "STL_PROVISIONAL/SENSOR_MAST_1.stl",
+    "size": 684,
+    "sha256": "dc3d487a8d7e11a37ab9132ce3d784f7ea952b005cfd2563e64b18e171e61e2a"
+  },
+  {
+    "file": "STL_PROVISIONAL/SENSOR_MAST_2.stl",
+    "size": 684,
+    "sha256": "dc3d487a8d7e11a37ab9132ce3d784f7ea952b005cfd2563e64b18e171e61e2a"
+  },
+  {
+    "file": "STL_PROVISIONAL/SHORT_DROP_GUIDE_FIT.stl",
+    "size": 111084,
+    "sha256": "7e849ecfd2c40aa4bcbb5f96b6b290d50908fc32b4b2950e04084eab92804180"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_01.stl",
+    "size": 292684,
+    "sha256": "e3546c5ca3783847673558cb3ff43b1cdc120db39d2044fdf2e3af57662ceb0c"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_02.stl",
+    "size": 292684,
+    "sha256": "aeee26ab7224fe1da8a300401f914dea8293fca0154a4b3a573c73fc5b0c248d"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_03.stl",
+    "size": 292684,
+    "sha256": "79509e4ef065900c550ee185757f3231f6a48ba2fb1e59713dc334e35c736ace"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_04.stl",
+    "size": 292684,
+    "sha256": "55cdcf6a426eef8f5a6ed51ad8eec16711c9c2215ded7a7793602834e2a1c364"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_05.stl",
+    "size": 292684,
+    "sha256": "57a058beb6ce525676b69b2d2e0f6e9928d37c382fb3f15f0b41cbec0be57b12"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_06.stl",
+    "size": 292684,
+    "sha256": "dda4c6b77bbbac2a679652fe718adeef4ca9b8e76167f602fa6faa4c09933e45"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_07.stl",
+    "size": 292684,
+    "sha256": "6f7225765b1e8557a5fe5838de41d5a441610ad48446c0652376c05acfd3e68b"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_08.stl",
+    "size": 292684,
+    "sha256": "73a47851f1f4a5830883c97a8cdef2a53c796b1aedc3e3a36f06ff89a3c788ed"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_09.stl",
+    "size": 292684,
+    "sha256": "fa484eb7dd44f15753cb828a5351140cb75c960c1d5a19e44954f2b76d172613"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_10.stl",
+    "size": 292684,
+    "sha256": "1f213e5512db290444068d4b0a94d4b59dc49597f4462852ea9080434a4906c2"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_11.stl",
+    "size": 292684,
+    "sha256": "1754685e6c3729015a9ade6f9a460115065b66e52ecdc8b969c47ed93fddeb3b"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRACK_UNDERSIDE_SPLICE_12.stl",
+    "size": 292684,
+    "sha256": "5a49a1329287247f902035c72bb3521f80ca92dda37deeb5e4b1c2496ff53562"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_01_1.stl",
+    "size": 12284,
+    "sha256": "3846220435c82996b5d9f89ebc7e9107672aeb530c88a22f61a13db29bfe275f"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_01_2.stl",
+    "size": 13784,
+    "sha256": "4e53688f5bf7325beba8429cf23ee03513f72fc68acc30074925917239f632c7"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_02_1.stl",
+    "size": 13084,
+    "sha256": "ae62355021a0b31fdf408da57fa6d8aa6341fda9b7c704b4456ae522ccdeb3ca"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_02_2.stl",
+    "size": 13084,
+    "sha256": "bf0058ea4bce90a65c5c3c794144bb22eaf2ed5608bf42c836b8bd43b409f27b"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_03_1.stl",
+    "size": 13084,
+    "sha256": "0f312fcba730f7d33976df8e97399bd82e8abe32c85afce4ddc042957a56aade"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_03_2.stl",
+    "size": 13084,
+    "sha256": "23cc03a146b842eae97b5db38f783bb44cb71dfcba2b9659f6e131291273ff7c"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_04_1.stl",
+    "size": 12284,
+    "sha256": "0e609aff791eb05586925e7b59c6ee2a250b9be27a020cebaac5e64b2b40f276"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_04_2.stl",
+    "size": 13784,
+    "sha256": "9b9f882e329d98da073f0b34c85d5927005323cdcf3e0bc830bda47b0f8bb3e5"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_05_1.stl",
+    "size": 12284,
+    "sha256": "c3644fd2d5a4192a2cabae9b41db075051a136cdd8d03ae0eeb743ff176a0403"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_05_2.stl",
+    "size": 13784,
+    "sha256": "65feef277a277bdb6a2aa41b618ed92d6dec368827cd833593928b4bf49d96c1"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_06_1.stl",
+    "size": 13084,
+    "sha256": "d00e3b273edf2d9553794d78956be1c4f92bc07f8fa4015479b7a2fbb89708fd"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_06_2.stl",
+    "size": 13084,
+    "sha256": "a52fe49df617da99a989e59b0467b1d25ac787423edbe9b3953b63e42c8d0daf"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_07_1.stl",
+    "size": 13084,
+    "sha256": "59d64300ee627add2f9be2a12b9d2ed948a02d047859bc439bd06da4c8fc210d"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_07_2.stl",
+    "size": 13084,
+    "sha256": "e469a7dc38f0caad6b27ab121d2cb85608bd834ce842f53d7103eed0785405fe"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_08_1.stl",
+    "size": 12284,
+    "sha256": "299a07ec482100a50eb3179514befaec97124bc0ec70aefa933a69321417cc82"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_08_2.stl",
+    "size": 13784,
+    "sha256": "9caaa984ad7ec486c46d95997303f0370a99b41f02bf295598c3a07199a517e1"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_09_1.stl",
+    "size": 12284,
+    "sha256": "942c6ff0d745b195d01c7dab9780e253790cd4aa15df91326c6c370decc62281"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_09_2.stl",
+    "size": 13784,
+    "sha256": "b1c2f091640ace3855de394a552339532636e320785479368462d74bd016846e"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_10_1.stl",
+    "size": 13084,
+    "sha256": "e0d6899106a0c0f39108531bd1b384e9be7cd0bc6b59491ea268b9b94d412d04"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_10_2.stl",
+    "size": 13084,
+    "sha256": "0f48fed6230cb6df82b87cf607079838ce25ee2400fba6fac467248707040fac"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_11_1.stl",
+    "size": 13084,
+    "sha256": "bebafa140f54ddbde3592258cd7a42d1b1cfc2e70528fa70bccb06efadb0263c"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_11_2.stl",
+    "size": 13084,
+    "sha256": "dbf6ae7cf7dbedd5469546f273137be697f0bded82f6a7a1a358bb660b232336"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_12_1.stl",
+    "size": 12284,
+    "sha256": "039e0d0571db034fa3c945b8eeb04e91553d07fee58a879920985bf71547dd33"
+  },
+  {
+    "file": "STL_PROVISIONAL/TRAY_12_2.stl",
+    "size": 13784,
+    "sha256": "0e0f53aeb4f4514fc6b4dd183e17a7ae202ac2ea2dbed7358d106ae4b0a940fb"
+  },
+  {
+    "file": "STL_PROVISIONAL/U_BRACKET_1.stl",
+    "size": 291884,
+    "sha256": "d0250c1dcb0ec6cc39391d8e6f174dd30aee2fcb7d1a1b7a2199a3b6ceb541b8"
+  },
+  {
+    "file": "STL_PROVISIONAL/U_BRACKET_2.stl",
+    "size": 291884,
+    "sha256": "bd5d6ea538309286737a8fc234323d6e59510ad95feaf282392eec277ac6e53e"
+  },
+  {
+    "file": "STL_PROVISIONAL/U_BRACKET_3.stl",
+    "size": 291884,
+    "sha256": "1c23be92254ebc141146e46064be62e250eb35433cab7e6188dc8df47ad6dada"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_DUAL_SENSOR_PLATE.stl",
+    "size": 291084,
+    "sha256": "ddcb70d00735649a9b8f13135cb478d904a465635a5bbccdf336284212cf1144"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_MARKER_CARRIER.stl",
+    "size": 149684,
+    "sha256": "6d03ad6781480b29b40ac2063299c181e761c0f6829baa9727833d1d55068ad3"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_MOTOR_ARM_210.stl",
+    "size": 1884,
+    "sha256": "ae5935ba9a07262fad6f7980e3fc7a7f892c0e31c7d2502702c2cc91ef14bdb8"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_MOTOR_ARM_330.stl",
+    "size": 1884,
+    "sha256": "b117ed183d283e2c43c2e3c3b76c4ae5df399157875b5badccf182204ed1c479"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_MOTOR_ARM_90.stl",
+    "size": 1884,
+    "sha256": "5c44102a61caed23efab255d36cdd25a4b9a4b7e62f127e555f0a1f7a02337f1"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_MOTOR_MOUNT_PROVISIONAL.stl",
+    "size": 361684,
+    "sha256": "9d48e0b25c38fe7c48377b6c969c41eaf23fc1cff10d5efa20c4b8c1a33133e9"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SENSOR_DROP_ARM.stl",
+    "size": 684,
+    "sha256": "13669397db68ca9bc8ab54e6060b482b8c69afc3d8b8358beddcf8ba3914ca61"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SENSOR_OVERHEAD_BOOM.stl",
+    "size": 684,
+    "sha256": "3034a2c4c840873874ac77e29017297e5cb91a825ddfd56240d692896f00661f"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_01.stl",
+    "size": 12284,
+    "sha256": "2faedaf92eaeb3d5292ddebb5d596fdcae79af275f794c9a14196ce5149a5da3"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_02.stl",
+    "size": 12284,
+    "sha256": "585ed8850ef41375ec48bad864b79764c450e4c3084181fa1531ec67d58dac94"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_03.stl",
+    "size": 12284,
+    "sha256": "86f39414b4e44459c2e9aae97ce1f29e2f7a5c22e00feabf3c1e04decdff8beb"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_04.stl",
+    "size": 12284,
+    "sha256": "6062cc396b1bb0d16e62627e419e5692d040f04e8d3e12348def48f78ce5ec90"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_05.stl",
+    "size": 12284,
+    "sha256": "4e6fd0f8ded2cbf2ce68a0530b3215e168931e4cf89bf0f21efdb458cc721357"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_06.stl",
+    "size": 12284,
+    "sha256": "d0b103a05870bd7044801519c2b81c21d47c6fd3125987f3ece71b7ba2a59940"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_07.stl",
+    "size": 12284,
+    "sha256": "d0675b70e7ea74841a3278f95948a0321bda34b13bcdf21d745409cd4ae74c48"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_08.stl",
+    "size": 12284,
+    "sha256": "a3e424527100c3e0f6793f30750e029e5eccb78531c50bbeea1e0470cf190604"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_09.stl",
+    "size": 12284,
+    "sha256": "b31c70faeadb745952352706b1400a25a2a22316115174f10beb4fa919a54e94"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_10.stl",
+    "size": 12284,
+    "sha256": "465c742a2b479c75de1c52b590e7fdbb9c2629db83caad71ae788f6f5ea9413a"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_11.stl",
+    "size": 12284,
+    "sha256": "16299e8ee6ca79de0da851cdb8859775208c0717e2cd3d9bb1ec9f197dca3efc"
+  },
+  {
+    "file": "STL_PROVISIONAL/UPPER_SUPPORT_RING_12.stl",
+    "size": 12284,
+    "sha256": "f764b33df44eb349c54239a632382fc18dc8b64dba1a655615a3ff30811c5b3c"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_01.stl",
+    "size": 164084,
+    "sha256": "41588204c2377191012bae4ade9581d03e737897f418dfa1b14657b7984ab375"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_02.stl",
+    "size": 164084,
+    "sha256": "9b7a991e34be069eea45966d550a97f6888667a33d5e20fe1a720ad8083408b2"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_03.stl",
+    "size": 164084,
+    "sha256": "12023790ef257c17a7dde6b49baee6afd409e22b1aecff57b5eea01b7251de32"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_04.stl",
+    "size": 164084,
+    "sha256": "50d0c53186581263defa051a4184c446c8a84cc528d4e4b2f0d99d56b11c0bd8"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_05.stl",
+    "size": 164084,
+    "sha256": "6d5922be32b23a51bd72dc3d421074f4efee1098ece93af4b263c73c09902063"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_06.stl",
+    "size": 164084,
+    "sha256": "1b44b9e30723c6b78c28cb4e6852894f570c73e73910249dec1b111b9d2bc9fc"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_07.stl",
+    "size": 164084,
+    "sha256": "319e80ad178e28c2344caeb21d404a71787de46b9b715da78b0910fc5e3968ab"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_08.stl",
+    "size": 164084,
+    "sha256": "58bea08b1653ee870f388e98a368f900bd63d9a1404ec7ab42b9d0d3d942d528"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_09.stl",
+    "size": 164084,
+    "sha256": "f71c826fcf0787fb7528a9ec9d327d62ceb6cfaa23a05a437b06b38682b6ea09"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_10.stl",
+    "size": 164084,
+    "sha256": "b220f1c6bf655e0698c7dfb87b4979b67ce2b53470c6bb3af9019a02df3a66d0"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_11.stl",
+    "size": 164084,
+    "sha256": "12033367804776ae15ef1aa21d05714ff947d86c199066f8234790c360424b31"
+  },
+  {
+    "file": "STL_PROVISIONAL/WALL_TRACK_12.stl",
+    "size": 164084,
+    "sha256": "8b4714866ed421072f93985295365e906d6875ab06cc9ba3f2880e8f8a385b9e"
+  }
+]

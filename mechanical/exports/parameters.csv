@@ -1,0 +1,56 @@
+﻿parameter,expression,units,status_or_description
+feed_ID,600 mm,mm,已确认：围壁内侧有效送料直径；不含轨道和机架
+hub_R,50 mm,mm,暂定：中央轮毂占用区域半径
+floor_T,6 mm,mm,暂定：固定底板厚度；刚度与接缝需试验
+deck_Z,330 mm,mm,暂定：送料底板在轮毂边缘处的高度
+slope,2 deg,deg,试验值：外高内低的浅坡角；可设 0 deg 比较平底
+wall_T,10 mm,mm,暂定：围壁径向厚度
+wall_H,140 mm,mm,暂定：水平轨道顶面相对底板内缘的高度
+rail_W,24 mm,mm,暂定：从围壁内侧起算的顶部承载面径向宽度
+rail_T,8 mm,mm,暂定：顶部轨道厚度
+blade_H,120 mm,mm,暂定：挡板水平上缘相对底板内缘的高度
+blade_T,5 mm,mm,暂定：挡板板厚
+floor_gap,3 mm,mm,试验值：挡板下缘与固定底板的竖直间隙
+wall_gap,4 mm,mm,试验值：挡板外端与围壁内侧的径向间隙
+roller_OD,22 mm,mm,待选型：轴承外径包络
+roller_ID,8 mm,mm,待选型：轴承内孔直径包络
+roller_W,7 mm,mm,待选型：轴承轴向宽度包络
+axle_clear,0.4 mm,mm,PROVISIONAL printed bolt clearance
+bridge_gap,4 mm,mm,Clearance above roller top
+bracket_T,6 mm,mm,PROVISIONAL U bracket wall thickness
+motor_W,42 mm,mm,待实测：现有电机机身宽度占位值
+motor_L,48 mm,mm,待实测：现有电机机身长度占位值
+shaft_D,5 mm,mm,待实测：轴径占位值；不能据此直接加工
+shaft_flat,0.5 mm,mm,待实测：D 形轴扁位预留；本版未应用到孔形
+motor_pitch,31 mm,mm,待实测：电机安装孔中心距占位值
+drop_X,180 mm,mm,试验值：固定落料孔中心距竖轴的距离，位于 +X 方向
+drop_L,220 mm,mm,试验值：落料孔的径向长度；按横卧瓶子验证
+drop_W,150 mm,mm,试验值：落料孔的周向宽度；需检查歪斜及相邻格
+drop_R,16 mm,mm,试验值：落料孔平面四角的圆角半径
+chute_H,25 mm,mm,暂定：短导向口相对底板内缘下方的延伸量
+tray_R,350 mm,mm,暂定：下层共同旋转托盘的半径
+tray_Z,95 mm,mm,暂定：下层托盘下表面距基座的高度
+tray_T,8 mm,mm,暂定：下层托盘厚度；实际耗材由切片决定
+bin_Ri,65 mm,mm,暂定：每只桶保留的中央避让半径
+bin_Ro,330 mm,mm,暂定：每只桶的最外半径
+bin_T,3 mm,mm,暂定：桶壁厚度
+bin_floor_T,4 mm,mm,暂定：桶底厚度
+bin_H,140 mm,mm,暂定：可拆桶高度；不代表已验证负载
+bin_span,112 deg,deg,暂定：单桶占用角度；三桶中心相隔 120 deg
+frame_R,400 mm,mm,暂定：外侧机架立柱的中心半径
+frame_W,28 mm,mm,PROVISIONAL square frame member width
+upper_angle,30 deg,deg,仅为 CAD 姿态：六片挡板、支架和上层标记一起转
+lower_angle,0 deg,deg,仅为 CAD 姿态：三桶、托盘及下层标记一起转
+printer_X,300 mm,mm,待确认：打印机 X 成型尺寸占位值
+printer_Y,300 mm,mm,待确认：打印机 Y 成型尺寸占位值
+printer_Z,300 mm,mm,待确认：打印机 Z 成型尺寸占位值
+track_Z,deck_Z + wall_H,mm,DERIVED horizontal track elevation
+track_R,feed_ID / 2 + rail_W / 2,mm,DERIVED wheel center radius
+axle_Z,track_Z + roller_OD / 2,mm,DERIVED: wheel bottom exactly touches track
+bin_Z,tray_Z + tray_T,mm,DERIVED locating tray bosses support bin floor
+rail_insert_OD,4.6 mm,mm,PROVISIONAL M3 heat-set insert pocket diameter; match purchased insert before printing
+rail_insert_L,5 mm,mm,PROVISIONAL insert length; preserve track top skin
+hole_edge_R,0.8 mm,mm,试验值：落料孔板厚方向的边缘倒圆半径；物理效果未验证
+motor_shaft_L,22 mm,mm,待实测：电机轴伸长度占位值
+upper_motor_Z,deck_Z - motor_L - 7 mm,mm,DERIVED upper motor position
+lower_motor_Z,tray_Z - motor_L - 22 mm,mm,DERIVED lower motor position

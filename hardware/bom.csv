@@ -1,0 +1,8 @@
+item,quantity,status,notes
+Upper stepper motor,1,existing,Exact model and mounting dimensions to confirm
+Lower stepper motor,1,existing,Loaded three-bin tray torque to verify
+Motor driver,2,procured jointly,Procurement and wiring were shared team work
+Arduino Mega 2560,1,control baseline,Board identity to match actual unit
+Freenove ESP32-S3 N8R8 and OV3660,1,vision baseline,Confirm installed board and camera
+Position sensors,TBD,planned,Type voltage quantity and placement not finalized
+Tray support bearings and fixings,TBD,provisional,Use CAD parts list and measured dimensions
