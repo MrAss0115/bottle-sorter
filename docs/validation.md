@@ -1,6 +1,6 @@
 # Validation record 2026-11-04
 
-Repository-relative host checks: 23/23 passed (11 legacy chute and 12 manual-result demo scenarios), using g++ with C++11, Wall, Wextra and Werror. The imported motor-control sketches are unchanged; test include paths were updated for the new folder layout.
+Repository-relative host checks: 23/23 passed (11 legacy chute and 12 manual-result demo scenarios), using g++ with C++11, Wall, Wextra and Werror. The imported motor-control logic is unchanged; text line endings are normalized and test include paths were updated for the new folder layout.
 
 The ESP32 hotspot password was extracted into an ignored local header and an example was provided. The ESP32 sketch was not compiled or uploaded as part of this repository import.
 
