@@ -1,0 +1,17 @@
+{
+  "config_version": "bins_v1",
+  "calibration_mode": "demo",
+  "calibration_note": "User-authorized bench-test thresholds, not measured physical bin calibration. Distance uploads must still come from the real sensor.",
+  "sensor_min_mm": 20,
+  "sensor_max_mm": 4000,
+  "sensor_bounds_note": "Initial HC-SR04 assumptions; verify actual sensor model before hardware acceptance.",
+  "max_spread_mm": 30,
+  "bins": [
+    {"bin_id": "plastic", "empty_distance_mm": 400, "full_distance_mm": 100, "clear_distance_mm": 130},
+    {"bin_id": "can", "empty_distance_mm": 400, "full_distance_mm": 100, "clear_distance_mm": 130},
+    {"bin_id": "temporary", "empty_distance_mm": 400, "full_distance_mm": 100, "clear_distance_mm": 130}
+  ],
+  "device_offline_after_ms": 30000,
+  "measurement_stale_after_ms": 120000,
+  "near_full_remaining_pct": 20
+}

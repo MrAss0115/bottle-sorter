@@ -1,0 +1,1401 @@
+{
+  "info": {
+    "_postman_id": "d5245bab-0937-4351-be90-2c9a3fc39b1e",
+    "name": "BottleSorter RFID — 完整測試（8000）",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "按00至33順序執行，會在所選後端寫入4筆模擬積分。僅使用獨立測試設備；需allow_test_writes=true。每輪產生新UID和批次，請勿並行執行。未包含真實密鑰；不會自動發送心跳或改變容量設備開機身份。HTTP401/409/400等負面案例的斷言通過也屬成功。"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "(function () {",
+          "const base = String(pm.variables.get('base_url') || '');",
+          "function halt(message) { pm.execution.skipRequest(); throw new Error(message); }",
+          "if (!/^https?:\\/\\/[^\\s?#]+$/.test(base) || base.endsWith('/')) halt('請設定不帶末尾斜線的 base_url');",
+          "if (pm.request.method !== 'GET') {",
+          "  if (String(pm.variables.get('allow_test_writes')) !== 'true') halt('測試會寫入所選資料庫。確認測試環境後將 allow_test_writes 設為 true');",
+          "  if (!/^(?:docs-test-|postman-test-|contract-test-)[A-Za-z0-9_-]+$/.test(String(pm.variables.get('test_device') || ''))) halt('只允許獨立測試設備身份，不能填真實設備 ID');",
+          "  if (!pm.collectionVariables.get('test_uid')) halt('請先執行 00 初始化測試輪次');",
+          "}",
+          "})();"
+        ]
+      }
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "item": [
+    {
+      "name": "A 初始化（每輪必先執行）",
+      "item": [
+        {
+          "name": "00 初始化新一輪：健康檢查＋產生測試卡號與批次",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "function halt(message) { pm.execution.skipRequest(); throw new Error(message); }",
+                  "if (!/^[0-9a-f]{32}$/.test(String(pm.variables.get('reward_device_key') || ''))) halt('請先在環境內填入測試設備的 reward_device_key');",
+                  "if (!/^[0-9a-f]{64}$/.test(String(pm.variables.get('reward_viewer_token') || ''))) halt('請先在環境內填入 reward_viewer_token');",
+                  "if (String(pm.variables.get('allow_test_writes')) !== 'true') halt('請確認測試寫入後設定 allow_test_writes=true');",
+                  "const c = pm.collectionVariables;",
+                  "const base = Math.max(Math.floor((Date.now()-Date.UTC(2026,0,1))/1000)*10, Number(c.get('last_batch_base') || 0)+10);",
+                  "if (!Number.isSafeInteger(base) || base > 4294967285) halt('測試批次超過 uint32，請檢查 last_batch_base');",
+                  "c.set('last_batch_base', String(base));",
+                  "c.set('test_uid', '00'+pm.variables.replaceIn('{{$guid}}').replace(/-/g,'').slice(0,6).toUpperCase());",
+                  "for (const [name, delta] of Object.entries({batch_first:2,batch_newer:4,batch_older:1,batch_rejected:5,batch_invalid:6})) c.set(name,String(base+delta));",
+                  "c.unset('first_received_at');",
+                  "const key=String(pm.variables.get('reward_device_key')), viewer=String(pm.variables.get('reward_viewer_token'));",
+                  "c.set('wrong_device_key',(key[0]==='0'?'1':'0')+key.slice(1));",
+                  "c.set('wrong_viewer_token',(viewer[0]==='0'?'1':'0')+viewer.slice(1));",
+                  "})();"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('服務可用',()=>pm.expect(pm.response.json().status).to.eql('ok'));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/health",
+            "description": "00 初始化新一輪：健康檢查＋產生測試卡號與批次。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "B 正常流程、重發、亂序與查詢",
+      "item": [
+        {
+          "name": "01 首筆上傳：earned20、total120",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_first') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "01 首筆上傳：earned20、total120。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_first}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "02 原樣重發：相同ACK、不新增",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_first') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "02 原樣重發：相同ACK、不新增。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_first}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "03 查流水：只有首筆並保存接收時間",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const data=pm.response.json(), c=pm.collectionVariables;",
+                  "pm.test('只有一筆，UID前導0保留',()=>{pm.expect(data.total).to.eql(1);pm.expect(data.items.length).to.eql(1);pm.expect(data.items[0].uid).to.eql(c.get('test_uid'));});",
+                  "pm.test('首筆數值正確',()=>{pm.expect(data.items[0].earned).to.eql(20);pm.expect(data.items[0].total).to.eql(120);});",
+                  "c.set('first_received_at',data.items[0].received_at);",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "03 查流水：只有首筆並保存接收時間。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "04 JSON欄位換順序重發：仍為同一筆",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_first') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "04 JSON欄位換順序重發：仍為同一筆。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rejected\": 0,\n  \"cans\": 1,\n  \"bottles\": 1,\n  \"total\": 120,\n  \"earned\": 20,\n  \"uid\": \"{{test_uid}}\",\n  \"batch\": {{batch_first}},\n  \"device\": \"{{test_device}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "05 同批次換卡號：409且不覆蓋",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "05 同批次換卡號：409且不覆蓋。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_first}},\n  \"uid\": \"00000002\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "06 同批次換total：409且不覆蓋",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 409', () => pm.response.to.have.status(409));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "06 同批次換total：409且不覆蓋。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_first}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 130,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "07 新批次：新增10分、total130",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_newer') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "07 新批次：新增10分、total130。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_newer}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 10,\n  \"total\": 130,\n  \"bottles\": 1,\n  \"cans\": 0,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "08 舊批次晚到：total100仍保留歷史",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_older') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "08 舊批次晚到：total100仍保留歷史。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_older}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 10,\n  \"total\": 100,\n  \"bottles\": 1,\n  \"cans\": 0,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "09 全部拒收：earned0仍是有效事件",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const expected = 'ACK ' + pm.collectionVariables.get('batch_rejected') + '\\n';",
+                  "pm.test('ACK 正文精確且僅一個 LF', () => pm.expect(pm.response.text()).to.eql(expected));",
+                  "pm.test('Content-Length 精確', () => pm.expect(pm.response.headers.get('Content-Length')).to.eql(String(expected.length)));",
+                  "pm.test('純文字回覆', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/plain'));",
+                  "pm.test('沒有分塊／壓縮', () => {pm.expect(pm.response.headers.has('Transfer-Encoding')).to.eql(false);pm.expect(pm.response.headers.has('Content-Encoding')).to.eql(false);});",
+                  "pm.test('標頭沒有超過設備127字節限制', () => pm.response.headers.each(h=>pm.expect((h.key+': '+h.value).length).to.be.at.most(127)));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "09 全部拒收：earned0仍是有效事件。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_rejected}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 0,\n  \"total\": 130,\n  \"bottles\": 0,\n  \"cans\": 0,\n  \"rejected\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10 查流水：四筆、去重、衝突與時間",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const data=pm.response.json(), c=pm.collectionVariables;",
+                  "pm.test('恰有四筆，沒有重複或錯誤寫入',()=>{pm.expect(data.total).to.eql(4);pm.expect(data.items.length).to.eql(4);});",
+                  "const actual=data.items.map(x=>x.batch).sort((a,b)=>a-b);",
+                  "const expected=['batch_older','batch_first','batch_newer','batch_rejected'].map(k=>Number(c.get(k))).sort((a,b)=>a-b);",
+                  "pm.test('批次集合正確',()=>pm.expect(actual).to.eql(expected));",
+                  "const first=data.items.find(x=>x.batch===Number(c.get('batch_first')));",
+                  "pm.test('原始資料及首次接收時間未被重發覆蓋',()=>{pm.expect(first.total).to.eql(120);pm.expect(first.uid).to.eql(c.get('test_uid'));pm.expect(first.received_at).to.eql(c.get('first_received_at'));});",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "10 查流水：四筆、去重、衝突與時間。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "11 查最新餘額：130且最大batch",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const d=pm.response.json(),c=pm.collectionVariables;",
+                  "pm.test('每卡每設備只一筆餘額',()=>{pm.expect(d.total).to.eql(1);pm.expect(d.items.length).to.eql(1);});",
+                  "pm.test('餘額130，未重複加分且未被舊批次覆蓋',()=>{pm.expect(d.items[0].total).to.eql(130);pm.expect(d.items[0].last_batch).to.eql(Number(c.get('batch_rejected')));});",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/reward-balances?device={{test_device}}&uid={{test_uid}}&limit=20&offset=0",
+            "description": "11 查最新餘額：130且最大batch。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "12 分頁：跳過兩筆再取兩筆",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const d=pm.response.json();pm.test('分頁總數與當頁正確',()=>{pm.expect(d.total).to.eql(4);pm.expect(d.items.length).to.eql(2);pm.expect(d.offset).to.eql(2);pm.expect(d.limit).to.eql(2);});",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=2&offset=2",
+            "description": "12 分頁：跳過兩筆再取兩筆。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "13 篩選不存在卡號：空結果",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "const d=pm.response.json();pm.test('正常回傳空結果',()=>{pm.expect(d.total).to.eql(0);pm.expect(d.items).to.eql([]);});",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}FFFFFF&limit=20&offset=0",
+            "description": "13 篩選不存在卡號：空結果。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "C 鑑權與非法資料",
+      "item": [
+        {
+          "name": "14 缺少上傳密鑰",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "14 缺少上傳密鑰。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "15 錯誤上傳密鑰",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{wrong_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "15 錯誤上傳密鑰。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "16 密鑰不屬於該device",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "16 密鑰不屬於該device。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"unauthorized-test-device\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "17 缺少查看口令",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "17 缺少查看口令。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "18 錯誤查看口令",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{wrong_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "18 錯誤查看口令。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "19 用設備密鑰冒充查看口令",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 401', () => pm.response.to.have.status(401));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "19 用設備密鑰冒充查看口令。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "20 多出timestamp欄位",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "20 多出timestamp欄位。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0,\n  \"timestamp\": 123\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "21 缺少total欄位",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "21 缺少total欄位。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "22 布林值不是整數積分",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "22 布林值不是整數積分。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": true,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "23 浮點20.0不能代替整數",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "23 浮點20.0不能代替整數。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20.0,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "24 件數總和超過5",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "24 件數總和超過5。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 5,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "25 earned不能被有效件數整除",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "25 earned不能被有效件數整除。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 21,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "26 UID小寫不合規",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "26 UID小寫不合規。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"deadbeef\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "27 有有效件但earned為0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "27 有有效件但earned為0。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 0,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "28 整批件數為0",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "28 整批件數為0。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 0,\n  \"cans\": 0,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "29 total小於earned",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "29 total小於earned。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": {{batch_invalid}},\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 19,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "30 batch超過uint32",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 400', () => pm.response.to.have.status(400));",
+                  "",
+                  "pm.test('錯誤回覆不能是 ACK', () => pm.expect(pm.response.text().startsWith('ACK ')).to.eql(false));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-Key",
+                "value": "{{reward_device_key}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards",
+            "description": "30 batch超過uint32。模擬測試，並非硬體驗證。",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"device\": \"{{test_device}}\",\n  \"batch\": 4294967296,\n  \"uid\": \"{{test_uid}}\",\n  \"earned\": 20,\n  \"total\": 120,\n  \"bottles\": 1,\n  \"cans\": 1,\n  \"rejected\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "D 最終核對及原接口只讀回歸",
+      "item": [
+        {
+          "name": "31 最後核對：非法請求沒有多寫入",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "",
+                  "const data=pm.response.json(), c=pm.collectionVariables;",
+                  "pm.test('恰有四筆，沒有重複或錯誤寫入',()=>{pm.expect(data.total).to.eql(4);pm.expect(data.items.length).to.eql(4);});",
+                  "const actual=data.items.map(x=>x.batch).sort((a,b)=>a-b);",
+                  "const expected=['batch_older','batch_first','batch_newer','batch_rejected'].map(k=>Number(c.get(k))).sort((a,b)=>a-b);",
+                  "pm.test('批次集合正確',()=>pm.expect(actual).to.eql(expected));",
+                  "const first=data.items.find(x=>x.batch===Number(c.get('batch_first')));",
+                  "pm.test('原始資料及首次接收時間未被重發覆蓋',()=>{pm.expect(first.total).to.eql(120);pm.expect(first.uid).to.eql(c.get('test_uid'));pm.expect(first.received_at).to.eql(c.get('first_received_at'));});",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{reward_viewer_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/rewards?device={{test_device}}&uid={{test_uid}}&limit=100&offset=0",
+            "description": "31 最後核對：非法請求沒有多寫入。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "32 原容量狀態接口只讀回歸",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('仍有三個收集桶',()=>pm.expect(pm.response.json().bins.length).to.eql(3));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/status",
+            "description": "32 原容量狀態接口只讀回歸。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        },
+        {
+          "name": "33 原測量歷史接口只讀回歸",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "pm.test('HTTP 200', () => pm.response.to.have.status(200));",
+                  "pm.test('測量歷史形狀正確',()=>pm.expect(pm.response.json().items).to.be.an('array'));",
+                  "})();"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/api/measurements?device_id=sorter_01&limit=1",
+            "description": "33 原測量歷史接口只讀回歸。模擬測試，並非硬體驗證。"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

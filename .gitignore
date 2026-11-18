@@ -18,3 +18,14 @@ __pycache__/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Backend private/runtime files
+**/.venv*/
+**/password/
+*.ppk
+*.pem
+*.key
+*.sqlite3*
+*.db
+*.db-*
+reward_credentials*.json

@@ -13,11 +13,14 @@ This team project combines Arduino Mega stepper control, ESP32-S3 camera classif
 | Legacy real-AI controller | [legacy/chute-v2](legacy/chute-v2) | Old chute at -30 / 0 / +30 degrees | Archived source baseline |
 | Manual-result full-flow demo | [demos/full-flow-sim](demos/full-flow-sim) | Old chute; keyboard 1/2/3 replaces AI | Separate demo baseline |
 | ESP32 camera and AI | [firmware/esp32](firmware/esp32) | Freenove ESP32-S3 N8R8 + OV3660 | SCAN / RESULT UART interface |
+| Capacity and RFID monitoring | [software/bottle_sorter_backend](software/bottle_sorter_backend) | FastAPI + SQLite, web dashboard, HTTP port 8000 | Software tests passed; device integration remains separate |
 | Three-bin rotating tray | [mechanical](mechanical) | New common tray, nominal 120-degree bin spacing | CAD R0.1; controller adaptation pending |
 
 **Do not run the old chute angles on the new tray.** Output-shaft pulses per revolution, bin alignment, sensor types, and loaded motion must be established for the actual mechanism. No new tray firmware is presented as complete.
 
 ## Start here
+
+- [Capacity/RFID backend, device API and deployment](software/bottle_sorter_backend/README.md)
 
 - [Setup and dependencies](docs/setup.md)
 - [Wiring and pin map](hardware/wiring.md)

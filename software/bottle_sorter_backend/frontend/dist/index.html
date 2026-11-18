@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A live view of your bottle sorter, estimated bin capacity and measurement history.">
+  <title>BottleScope — Collection Monitor</title>
+  <link rel="preload" href="/assets/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/assets/style.css?v=bilingual-hant-v1">
+  <script src="/assets/app.js?v=bilingual-hant-v1" type="module"></script>
+  <script src="/assets/rewards.mjs?v=rfid-v1" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#overview">Skip to monitoring</a>
+  <aside class="sidebar">
+    <a class="brand" href="#overview" aria-label="BottleScope home">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="/assets/lucide.svg#icon-recycle"></use></svg></span>
+      <span>BottleScope<small>COLLECTION MONITOR</small></span>
+    </a>
+    <div class="nav-label">WORKSPACE</div>
+    <nav aria-label="Main navigation">
+      <a class="nav-item active" href="#overview" aria-current="location"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-layout-dashboard"></use></svg>Live overview</a>
+      <a class="nav-item" href="#history"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-list-filter"></use></svg>Measurements</a>
+      <a class="nav-item" href="#rewards"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-recycle"></use></svg>Recycling rewards</a>
+      <a class="nav-item" href="#device-info"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-server"></use></svg>Device details</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="workspace-tag"><span class="workspace-icon">01</span><div>Sorting station<small>1 device · 3 collection bins</small></div></div>
+      <button class="help-link" type="button" data-help><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-circle-help"></use></svg> About this monitor <span aria-hidden="true">↗</span></button>
+    </div>
+  </aside>
+
+  <div class="workspace">
+    <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="slash">/</span>Collection monitor</div><div class="topbar-right"><button id="languageToggle" type="button" class="button button-quiet language-toggle" aria-label="Switch to Traditional Chinese" aria-pressed="false" title="Switch to Traditional Chinese"><span data-language="zh">繁中</span><span class="language-divider" aria-hidden="true">/</span><span data-language="en" class="is-active">EN</span></button><span id="connectionBadge" class="connection-badge"><i></i>Connecting</span><time id="headerClock"></time></div></header>
+    <main>
+      <section id="overview" class="overview-section" aria-labelledby="pageTitle">
+        <div class="page-heading"><div><div class="eyebrow">YOUR SORTING STATION, AT A GLANCE</div><h1 id="pageTitle">Collection overview<span class="title-dot">.</span></h1><p>A clear view of your device and every collection bin.</p></div><div class="page-actions"><button id="pollToggle" type="button" class="button button-quiet" aria-pressed="false"><span class="poll-dot"></span><span id="pollText">Live · every 3s</span></button><button id="refreshButton" type="button" class="button button-primary"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-refresh-cw"></use></svg>Refresh</button></div></div>
+
+        <div id="noticeRegion" class="notice-stack" role="status" aria-live="polite"></div>
+
+        <section class="device-card" aria-labelledby="deviceTitle">
+          <div class="device-heading"><div class="device-identity"><span class="machine-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="/assets/lucide.svg#icon-server"></use></svg></span><div><div class="section-kicker">CONNECTED DEVICE</div><h2 id="deviceTitle">Bottle sorter 01 <span id="deviceState" class="badge neutral">Awaiting sync</span></h2><div id="deviceId" class="device-id">sorter_01</div></div></div><div class="device-note"><span class="live-glyph" aria-hidden="true"></span><span id="deviceRule">Connection is verified by device heartbeat</span></div></div>
+          <dl class="device-metrics"><div><dt>Current activity</dt><dd id="taskState">—</dd></div><div><dt>Last heartbeat</dt><dd id="heartbeatTime">—</dd></div><div><dt>Heartbeat age</dt><dd id="heartbeatAge">—</dd></div><div><dt>Dropped uploads · this boot</dt><dd id="droppedUploads">—</dd></div></dl>
+        </section>
+
+        <div class="section-heading"><div><h2>Collection bins</h2><p>Independent measurements. One clear view.</p></div><span class="section-aside">3 collection bins <span class="tiny-line"></span> 1 device</span></div>
+        <div id="calibrationNotice" class="calibration-notice" hidden><span class="notice-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="/assets/lucide.svg#icon-ruler"></use></svg></span><div><strong id="calibrationTitle">Capacity calibration required</strong><p id="calibrationMessage">Distance readings are saved. Remaining capacity needs measured calibration values.</p></div><button type="button" data-help>Learn more <span aria-hidden="true">↗</span></button></div>
+        <div id="binGrid" class="bin-grid" aria-label="Collection bin status"></div>
+        <div class="capacity-footnote"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-info"></use></svg> Capacity is an ultrasonic estimate, not an exact volume or item count.<span id="lastSync">Waiting for first sync</span></div>
+      </section>
+
+      <section id="history" class="history-section" aria-labelledby="historyTitle">
+        <div class="section-heading"><div><h2 id="historyTitle">Recent measurements</h2><p>Every attempt has a place in the record.</p></div><span id="historyCount" class="record-count">Loading records</span></div>
+        <div class="history-panel"><div class="history-toolbar"><div class="filter-group"><label for="historyBin">Bin</label><select id="historyBin"><option value="">All bins</option><option value="plastic">Plastic bottles</option><option value="can">Aluminium cans</option><option value="temporary">Temporary bin</option></select><label for="historyResult">Result</label><select id="historyResult"><option value="all">All results</option><option value="valid">Successful</option><option value="failed">Failed</option></select></div><label class="limit-label" for="historyLimit">Latest <select id="historyLimit"><option value="20">20</option><option value="50">50</option><option value="100">100</option></select> records</label></div>
+          <div class="table-scroll"><table><thead><tr><th scope="col">Measurement</th><th scope="col">Collection bin</th><th scope="col">Distance</th><th scope="col">Full state</th><th scope="col">Result</th><th scope="col">Received at</th><th scope="col"><span class="sr-only">Actions</span></th></tr></thead><tbody id="historyBody"><tr><td colspan="7" class="empty-cell">Loading measurements…</td></tr></tbody></table></div>
+          <div class="table-footer"><span id="historyScope">Newest received first</span><span>Failed readings never erase the last valid measurement.</span></div>
+        </div>
+      </section>
+
+      <section id="rewards" class="history-section" aria-labelledby="rewardsTitle">
+        <div class="section-heading"><div><h2 id="rewardsTitle">Recycling rewards</h2><p>RFID rewards reported by your sorting devices.</p></div><span id="rewardCount" class="record-count"></span></div>
+        <div class="history-panel">
+          <form id="rewardUnlock" class="history-toolbar reward-wrap">
+            <label for="rewardPassword">Viewing password</label><input id="rewardPassword" type="password" autocomplete="off" required maxlength="64" aria-describedby="rewardAccessNote">
+            <button class="button button-primary" type="submit">Unlock rewards</button>
+            <p id="rewardAccessNote">Use the separate viewing password. It is kept in this tab only.</p>
+          </form>
+          <div id="rewardData" hidden>
+            <form id="rewardFilters" class="history-toolbar reward-wrap">
+              <label for="rewardDevice">Device</label><input id="rewardDevice" maxlength="32" placeholder="Exact device ID">
+              <label for="rewardUid">RFID UID</label><input id="rewardUid" maxlength="20" placeholder="Exact UID, keep leading zeros" spellcheck="false">
+              <label for="rewardMode">View</label><select id="rewardMode"><option value="events">Reward history</option><option value="balances">Latest device balances</option></select>
+              <label for="rewardLimit">Per page</label><select id="rewardLimit"><option>20</option><option>50</option><option>100</option></select>
+              <button class="button button-primary" type="submit">Apply / refresh</button><button id="rewardLock" class="button button-quiet" type="button">Lock rewards</button>
+            </form>
+            <div class="table-scroll"><table><thead id="rewardHead"></thead><tbody id="rewardBody"></tbody></table></div>
+            <div class="table-footer reward-wrap"><span id="rewardPage"></span><div><button id="rewardPrev" class="button button-quiet" type="button">Previous page</button><button id="rewardNext" class="button button-quiet" type="button">Next page</button></div></div>
+          </div>
+          <p id="rewardStatus" class="reward-status" role="status" aria-live="polite"></p>
+          <div class="table-footer"><span>Balances are separate for each device. Received time is server receipt time, not the actual recycling time.</span></div>
+        </div>
+      </section>
+
+      <section id="device-info" class="info-section" aria-labelledby="infoTitle"><div class="section-heading"><div><h2 id="infoTitle">Device details</h2><p>The context behind your readings.</p></div><button class="text-button" type="button" data-help>Understanding the data <span aria-hidden="true">↗</span></button></div><div class="info-grid"><div class="info-card"><span class="info-number">01</span><h3>Current session</h3><p>Each device restart has its own identity. Earlier measurements stay in history.</p><code id="bootId">No device heartbeat received</code></div><div class="info-card"><span class="info-number">02</span><h3>Calibration</h3><p id="configDescription">Waiting for configuration.</p><div><span id="configState" class="badge neutral">Awaiting sync</span><span id="configVersion" class="info-version">—</span></div></div><div class="info-card"><span class="info-number">03</span><h3>Data freshness</h3><p>Device availability and measurement freshness are checked independently.</p><div class="threshold-values"><span>Heartbeat timeout <b id="offlineThreshold">30 sec</b></span><span>Reading expires after <b id="staleThreshold">120 sec</b></span></div></div></div></section>
+      <footer class="page-footer"><span>BottleScope <span class="footer-separator">/</span> Every collection, accounted for.</span><span>Device-reported data · Monitoring only</span></footer>
+    </main>
+  </div>
+
+  <dialog id="detailDialog" aria-labelledby="dialogTitle"><div class="dialog-heading"><div><div class="eyebrow">BOTTLESCOPE / DETAILS</div><h2 id="dialogTitle">About this monitor</h2></div><button id="dialogClose" type="button" aria-label="Close details"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="/assets/lucide.svg#icon-x"></use></svg></button></div><div id="dialogBody" class="dialog-body"></div></dialog>
+  <noscript><div class="noscript-message">Enable JavaScript to view device status. API documentation remains available at /docs.</div></noscript>
+</body>
+</html>

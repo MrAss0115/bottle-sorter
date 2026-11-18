@@ -1,0 +1,30 @@
+{
+  "config_version": "bins_v1",
+  "bins": [
+    {"bin_id": "plastic", "target_angle_deg": null, "empty_distance_mm": null, "full_distance_mm": null, "clear_distance_mm": null},
+    {"bin_id": "can", "target_angle_deg": null, "empty_distance_mm": null, "full_distance_mm": null, "clear_distance_mm": null},
+    {"bin_id": "temporary", "target_angle_deg": null, "empty_distance_mm": null, "full_distance_mm": null, "clear_distance_mm": null}
+  ],
+  "sensor_min_mm": null,
+  "sensor_max_mm": null,
+  "max_spread_mm": null,
+  "bin_settle_ms": 1000,
+  "drop_wait_ms": 1500,
+  "post_drop_settle_ms": 1000,
+  "samples_per_measurement": 5,
+  "max_sample_attempts": 8,
+  "sample_interval_ms": 60,
+  "echo_timeout_us": 30000,
+  "measurement_timeout_ms": 2000,
+  "measurement_retry_count": 1,
+  "auto_scan_enabled": false,
+  "scan_interval_ms": 60000,
+  "heartbeat_interval_ms": 10000,
+  "http_timeout_ms": 3000,
+  "upload_retry_interval_ms": 5000,
+  "upload_max_attempts": 3,
+  "measurement_queue_size": 8,
+  "device_offline_after_ms": 30000,
+  "measurement_stale_after_ms": 120000,
+  "near_full_remaining_pct": 20
+}
